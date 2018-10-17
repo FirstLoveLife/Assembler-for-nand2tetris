@@ -16,6 +16,7 @@ fun allDigits s =
                 ans
             else
                 allInRange f (a+1,b) ((f a) andalso ans);
+
         fun checkDigit i = Char.isDigit (String.sub (s,i))
     in
         allInRange checkDigit (0, String.size s) true
@@ -33,6 +34,7 @@ fun readLines filename =
                 then line
                 else String.substring (line, 0, length - 1)
             end
+
         fun removeHeadSpaces line =
             let
                 val headSpace = "^ +"
@@ -83,8 +85,13 @@ fun readLines filename =
             in String.tokens (fn c => c = #"\n") poem
             end
     in
-        List.filter (fn str => str <> "\r" andalso str <> "") (List.map (removeCarriageReturn o removeHeadSpaces o removeTailSpaces o removeComment) (readFile filename)
-                                                              )
+        List.filter
+            (fn str => str <> "\r" andalso str <> "")
+            (List.map (removeCarriageReturn
+                       o removeHeadSpaces
+                       o removeTailSpaces
+                       o removeComment)
+                      (readFile filename))
     end
 
 
@@ -92,8 +99,15 @@ fun replaceDigestLabelsAndVariables instructions =
     let
         fun replaceDigestLabels instructions =
             let
-                fun replaceDigestLabelsHelper ([], newinstructions, index, newLabelPairs) = (List.rev newinstructions, newLabelPairs)
-                  | replaceDigestLabelsHelper (instructions, newinstructions, index, newLabelPairs) =
+                fun replaceDigestLabelsHelper ([],
+                                               newinstructions,
+                                               index,
+                                               newLabelPairs) =
+                    (List.rev newinstructions, newLabelPairs)
+                  | replaceDigestLabelsHelper (instructions,
+                                               newinstructions,
+                                               index,
+                                               newLabelPairs) =
                     let
                         val firstInstruction = hd instructions
                         val length = String.size firstInstruction
@@ -127,11 +141,12 @@ fun replaceDigestLabelsAndVariables instructions =
             let
 
                 val (instructions, newLabelPairs) = replaceDigestLabels instructions
-                val defaultSymbolPairs =[("SP", "0"), ("LCL", "1"), ("ARG", "2"), ("THIS", "3"),("THAT", "4"),
-                                         ("R0" , "0"), ("R1" , "1"), ("R2" , "2"), ("R3" , "3"), ("R4" , "4"),
-                                         ("R5" , "5"), ("R6" , "6"), ("R7" , "7"), ("R8" , "8"), ("R9" , "9"),
-                                         ("R10", "10"), ("R11", "11"), ("R12", "12"), ("R13", "13"), ("R14", "14"),
-                                         ("R15", "15"), ("SCREEN" , "16384"), ("KBD", "24576")]
+                val defaultSymbolPairs =
+                    [("SP", "0"), ("LCL", "1"), ("ARG", "2"), ("THIS", "3"),("THAT", "4"),
+                     ("R0" , "0"), ("R1" , "1"), ("R2" , "2"), ("R3" , "3"), ("R4" , "4"),
+                     ("R5" , "5"), ("R6" , "6"), ("R7" , "7"), ("R8" , "8"), ("R9" , "9"),
+                     ("R10", "10"), ("R11", "11"), ("R12", "12"), ("R13", "13"), ("R14", "14"),
+                     ("R15", "15"), ("SCREEN" , "16384"), ("KBD", "24576")]
                 fun replaceVariablesHelper ([], index, allSymbolPairs) = allSymbolPairs
                   | replaceVariablesHelper (instructions, index, allSymbolPairs) =
                     let
@@ -141,7 +156,10 @@ fun replaceDigestLabelsAndVariables instructions =
                         val nextIndex = index + 1
                         val symbol = String.substring (firstInstruction, 1, (length - 1))
                     in
-                        if h <> "@" orelse (allDigits symbol) orelse (List.foldl (fn (a, b) => symbol = (#1 (a)) orelse b) false allSymbolPairs)
+                        if h <> "@"
+                           orelse (allDigits symbol)
+                           orelse (List.foldl (fn (a, b) => symbol = (#1 (a)) orelse b)
+                                              false allSymbolPairs)
                         then replaceVariablesHelper (tl instructions,
                                                      index,
                                                      allSymbolPairs)
@@ -155,7 +173,9 @@ fun replaceDigestLabelsAndVariables instructions =
                             end
                     end
             in
-                (instructions, replaceVariablesHelper (instructions, 16, newLabelPairs@defaultSymbolPairs))
+                (instructions, replaceVariablesHelper (instructions,
+                                                       16,
+                                                       newLabelPairs@defaultSymbolPairs))
             end
 
     in
@@ -167,7 +187,8 @@ fun process instructions allSymbolPairs =
         fun  getBinary n =
              let
                  fun getBinaryHelper 0   acc = concat acc
-                   | getBinaryHelper num acc = getBinaryHelper (num div 2) (Int.toString (num mod 2) :: acc)
+                   | getBinaryHelper num acc = getBinaryHelper (num div 2)
+                                                               (Int.toString (num mod 2) :: acc)
              in
                  getBinaryHelper n []
              end
@@ -259,11 +280,11 @@ fun process instructions allSymbolPairs =
                 case String.tokens (fn c => c = #"=") instruction of
                     jump::[] =>
                     (case String.tokens (fn c => c = #";")  jump of
-                       comp::jmp => "111"
-                                     ^ (getBinaryInstruction (comp, compSymbolPairs))
-                                     ^ "000"
-                                     ^ (getBinaryInstruction (hd jmp, jumpSymbolPairs))
-                                     ^ "\r")
+                         comp::jmp => "111"
+                                      ^ (getBinaryInstruction (comp, compSymbolPairs))
+                                      ^ "000"
+                                      ^ (getBinaryInstruction (hd jmp, jumpSymbolPairs))
+                                      ^ "\r")
                   | dest::comp => "111"
                                   ^ (getBinaryInstruction (hd comp, compSymbolPairs))
                                   ^ (getBinaryInstruction (dest, destSymbolPairs))
