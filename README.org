@@ -39,7 +39,8 @@ init
 *** todo
 
 - Exception and space handle
-- implement hashtable to store symbols.
+- Implement hashtable to store symbols.
+- Too many nested functions, I should reformated them
 
 *** Thanks
 This project is inspired by [[CestDiego's nand2tetris-assembler.el][https://github.com/CestDiego/nand2tetris.el]] a lot. I also learn some elisp skills from his project
