@@ -2,6 +2,7 @@ This is a tiny assembler writen in sml and compile in smlnj, which convert assem
 It is also [[https://www.nand2tetris.org/][nand2tetris]]'s 6st project.
 
 *** Use
+
 #+BEGIN_SRC sml
 $ smlnj
 - use "assembler.sml";
@@ -9,5 +10,6 @@ $ smlnj
 #+END_SRC
 
 *** TODO
+
 - Exception and space handle
 - implement hashtable to store symbols.
