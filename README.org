@@ -42,4 +42,4 @@ init
 - implement hashtable to store symbols.
 
 *** Thanks
-This project is inspired by [CestDiego's [[nand2tetris-assembler.el][https://github.com/CestDiego/nand2tetris.el]] a lot. I also learn some elisp skills from his project
+This project is inspired by [[CestDiego's nand2tetris-assembler.el][https://github.com/CestDiego/nand2tetris.el]] a lot. I also learn some elisp skills from his project
