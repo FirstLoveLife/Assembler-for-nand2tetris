@@ -8,6 +8,32 @@ $ smlnj
 - use "assembler.sml";
 - init "filepath";
 #+END_SRC
+*** outline
+#+BEGIN_SRC
+allDigits
+    allInRange
+    checkDigit
+readLines
+    removeCarriageReturn
+    removeHeadSpaces
+    removeTailSpaces
+    removeComment
+    readFile
+replaceDigestLabelsAndVariables
+    replaceDigestLabels
+        replaceDigestLabelsHelper
+    getLabelPairsVariables
+        replaceVariablesHelper
+process
+    getBinary
+        getBinaryHelper
+    appendZero
+    getBinaryInstruction
+    parseInstruction
+init
+          write
+
+#+END_SRC
 
 *** todo
 

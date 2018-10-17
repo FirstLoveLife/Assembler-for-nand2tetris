@@ -16,9 +16,9 @@ fun allDigits s =
                 ans
             else
                 allInRange f (a+1,b) ((f a) andalso ans);
-        fun f i = Char.isDigit (String.sub (s,i))
+        fun checkDigit i = Char.isDigit (String.sub (s,i))
     in
-        allInRange f (0, String.size s) true
+        allInRange checkDigit (0, String.size s) true
     end
 
 fun readLines filename =
@@ -76,24 +76,16 @@ fun readLines filename =
                         String.substring (line, 0, pos)
                     end
             end
-        fun readPoem(filename) =
+        fun readFile(filename) =
             let val file = TextIO.openIn filename
                 val poem = TextIO.inputAll file
                 val _ = TextIO.closeIn file
             in String.tokens (fn c => c = #"\n") poem
             end
     in
-        List.filter (fn str => str <> "\r" andalso str <> "") (List.map (removeCarriageReturn o removeHeadSpaces o removeTailSpaces o removeComment) (readPoem filename)
+        List.filter (fn str => str <> "\r" andalso str <> "") (List.map (removeCarriageReturn o removeHeadSpaces o removeTailSpaces o removeComment) (readFile filename)
                                                               )
     end
-
-fun writePoem(filename) =
-    let val file = TextIO.openOut(filename)
-        val _ = TextIO.output(file, "Roses are red,\nViolets are blue.\n")
-        val _ = TextIO.output(file, "I have a gun.\nGet in the van.\n")
-    in TextIO.closeOut(file)
-    end
-
 
 
 fun replaceDigestLabelsAndVariables instructions =
@@ -174,10 +166,10 @@ fun process instructions allSymbolPairs =
     let
         fun  getBinary n =
              let
-                 fun g' 0   acc = concat acc
-                   | g' num acc = g' (num div 2) (Int.toString (num mod 2) :: acc)
+                 fun getBinaryHelper 0   acc = concat acc
+                   | getBinaryHelper num acc = getBinaryHelper (num div 2) (Int.toString (num mod 2) :: acc)
              in
-                 g' n []
+                 getBinaryHelper n []
              end
         val compSymbolPairs =
             [("0", "0101010"),
