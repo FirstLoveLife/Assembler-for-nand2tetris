@@ -9,7 +9,7 @@ $ smlnj
 - init "filepath";
 #+END_SRC
 
-*** TODO
+*** todo
 
 - Exception and space handle
 - implement hashtable to store symbols.
