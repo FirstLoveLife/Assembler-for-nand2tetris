@@ -40,3 +40,6 @@ init
 
 - Exception and space handle
 - implement hashtable to store symbols.
+
+*** Thanks
+This project is inspired by CestDiego's [nand2tetris-assembler.el](https://github.com/CestDiego/nand2tetris.el) a lot.
