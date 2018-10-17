@@ -1,0 +1,9 @@
+This is a tiny assembler writen in sml and compile in smlnj, which convert assembler language to machine language.
+It is also [[https://www.nand2tetris.org/][nand2tetris]]'s 6st project.
+
+*** Use
+#+BEGIN_SRC sml
+$ smlnj
+- use "assembler.sml";
+- init "filepath";
+#+END_SRC
