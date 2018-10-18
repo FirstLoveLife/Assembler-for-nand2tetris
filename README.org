@@ -38,6 +38,7 @@ init
 
 *** todo
 
+- Each phase or module of the assembler belongs in its own structure.
 - Exception and space handle
 - Implement hashtable to store symbols.
 - Too many nested functions, I should reformated them
